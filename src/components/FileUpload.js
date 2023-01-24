@@ -30,8 +30,8 @@ export default function FileUpload() {
             {selectedFile ?
                 <div className="w-full py-8">
                     <button className='px-4 py-2 bg-red-700 rounded-md text-white fixed top-2 right-2' onClick={() => setFile(null)}>X</button>
-                    <Document file={selectedFile} onLoadSuccess={onDocumentLoadSuccess} className="flex justify-center p-2 shadow-md border">
-                        <Page pageNumber={currPage} />
+                    <Document file={selectedFile} onLoadSuccess={onDocumentLoadSuccess} className="flex justify-center">
+                        <Page pageNumber={currPage} className="px-4 py-2 shadow-lg border" />
                     </Document>
                     <div className='fixed bottom-2 flex items-center justify-center w-full gap-3'>
                         {currPage > 1 && <button onClick={() => changePage(-1)} className='px-4 py-2 bg-gray-700 rounded-md text-white'>{'<'}</button>}
