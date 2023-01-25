@@ -10,28 +10,23 @@ import { useButtons } from '../context/CanvasContext';
 
 export default function FileUpload() {
 
-    const [numPages, setNumPages] = useState(null);
-    const [currPage, setCurrPage] = useState(1);
-    const [selectedFile, setFile] = useState(null);
+    const contextValues = useButtons();
 
     const { getRootProps, getInputProps } = useDropzone({
-        onDrop: files => setFile(files[0])
+        onDrop: files => contextValues.setFile(files[0])
     })
 
     function onDocumentLoadSuccess({ numPages }) {
-        setNumPages(numPages);
-        setCurrPage(1);
+        contextValues.setNumPages(numPages);
+        contextValues.setCurrPage(1);
         contextValues.setCanvas(initCanvas());
     }
 
     function changePage(offset) {
-        setCurrPage(page => page + offset);
+        contextValues.setCurrPage(page => page + offset);
     }
 
     // fabric js
-
-    const contextValues = useButtons();
-
     const initCanvas = () => (
         new fabric.Canvas('canvas', {
             height: 792,
@@ -48,19 +43,23 @@ export default function FileUpload() {
 
     return (
         <div>
-            {selectedFile ?
+            {contextValues.selectedFile ?
                 <div className="w-full py-8">
-                    <button className='px-4 py-2 bg-red-700 rounded-md text-white fixed top-2 right-2' onClick={() => setFile(null)}>X</button>
-                    <Document file={selectedFile} onLoadSuccess={onDocumentLoadSuccess} className="flex justify-center">
+                    <button className='px-4 py-2 bg-red-700 rounded-md text-white fixed top-2 right-2' onClick={() => contextValues.setFile(null)}>X</button>
+
+                    <Document file={contextValues.selectedFile} onLoadSuccess={onDocumentLoadSuccess} className="flex justify-center">
+
                         <div className='absolute z-[9]'>
                             <canvas id="canvas" />
                         </div>
-                        <Page pageNumber={currPage} className="px-4 py-2 shadow-lg border" />
+
+                        <Page pageNumber={contextValues.currPage} className="px-4 py-2 shadow-lg border" />
+
                     </Document>
                     <div className='fixed bottom-2 flex items-center justify-center w-full gap-3'>
-                        {currPage > 1 && <button onClick={() => changePage(-1)} className='px-4 py-2 bg-gray-700 rounded-md text-white'>{'<'}</button>}
-                        <div className='px-4 py-2 bg-gray-700 rounded-md text-white'>Page {currPage} of {numPages}</div>
-                        {currPage < numPages && <button onClick={() => changePage(1)} className='px-4 py-2 bg-gray-700 rounded-md text-white'>{'>'}</button>}
+                        {contextValues.currPage > 1 && <button onClick={() => changePage(-1)} className='px-4 py-2 bg-gray-700 rounded-md text-white'>{'<'}</button>}
+                        <div className='px-4 py-2 bg-gray-700 rounded-md text-white'>Page {contextValues.currPage} of {contextValues.numPages}</div>
+                        {contextValues.currPage < contextValues.numPages && <button onClick={() => changePage(1)} className='px-4 py-2 bg-gray-700 rounded-md text-white'>{'>'}</button>}
                     </div>
                 </div>
                 : <div className="w-full py-8 flex items-center justify-center" {...getRootProps()}>

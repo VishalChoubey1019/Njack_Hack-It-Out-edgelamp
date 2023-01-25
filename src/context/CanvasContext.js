@@ -8,7 +8,14 @@ export const useButtons = () => {
 }
 
 export const CanvasProvider = ({ children }) => {
-    const [canvas, setCanvas] = React.useState('')
+    // file
+    const [numPages, setNumPages] = React.useState(null);
+    const [currPage, setCurrPage] = React.useState(1);
+    const [selectedFile, setFile] = React.useState(null);
+
+    const [canvas, setCanvas] = React.useState('');
+
+    console.log(canvas)
 
     // add a rectangle
     const addRect = canvi => {
@@ -32,7 +39,7 @@ export const CanvasProvider = ({ children }) => {
     // add functions here
 
     return (
-        <funButtons.Provider value={{ canvas, setCanvas, addRect, addText }}>
+        <funButtons.Provider value={{ canvas, setCanvas, addRect, addText, numPages, setNumPages, currPage, setCurrPage, selectedFile, setFile }}>
             {children}
         </funButtons.Provider>
     )
