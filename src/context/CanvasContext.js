@@ -14,15 +14,15 @@ export const CanvasProvider = ({ children }) => {
     const [selectedFile, setFile] = React.useState(null);
 
     const [canvas, setCanvas] = React.useState('');
-
-    console.log(canvas)
-
+     
     // add a rectangle
     const addRect = canvi => {
         const rect = new fabric.Rect({
             height: 180,
             width: 200,
-            fill: '#f4a261'
+            fill: '#f4a261',
+            cornerStyle: 'circle',
+            editable: true
         });
         canvi.add(rect);
         canvi.renderAll();
@@ -36,10 +36,16 @@ export const CanvasProvider = ({ children }) => {
         canvi.add(text);
         canvi.renderAll();
     }
+    // add image
+    const addImage = canvi => {
+        const image = new fabric.Image("jvghj")
+        canvi.add(image);
+        canvi.renderAll();
+    }
     // add functions here
 
     return (
-        <funButtons.Provider value={{ canvas, setCanvas, addRect, addText, numPages, setNumPages, currPage, setCurrPage, selectedFile, setFile }}>
+        <funButtons.Provider value={{ canvas, setCanvas, addRect, addText, addImage, numPages, setNumPages, currPage, setCurrPage, selectedFile, setFile }}>
             {children}
         </funButtons.Provider>
     )

@@ -7,9 +7,9 @@ import 'react-pdf/dist/esm/Page/TextLayer.css';
 import { useDropzone } from 'react-dropzone';
 import { fabric } from 'fabric';
 import { useButtons } from '../context/CanvasContext';
-
+import SideBar from './SideBar';
 export default function FileUpload() {
-
+    const [edits,setEdits] = useState({});
     const contextValues = useButtons();
 
     const { getRootProps, getInputProps } = useDropzone({
@@ -17,13 +17,20 @@ export default function FileUpload() {
     })
 
     function onDocumentLoadSuccess({ numPages }) {
+        setEdits({});
         contextValues.setNumPages(numPages);
         contextValues.setCurrPage(1);
         contextValues.setCanvas(initCanvas());
     }
 
     function changePage(offset) {
+        const page = contextValues.currPage;
+        edits[page] = contextValues.canvas.toObject();
+        setEdits(edits);
         contextValues.setCurrPage(page => page + offset);
+        contextValues.canvas.clear()
+        edits[page+offset] && contextValues.canvas.loadFromJSON(edits[page+offset]);
+        contextValues.canvas.renderAll();
     }
 
     // fabric js
@@ -43,6 +50,7 @@ export default function FileUpload() {
 
     return (
         <div>
+            {contextValues.selectedFile && <SideBar />}
             {contextValues.selectedFile ?
                 <div className="w-full py-8">
                     <button className='px-4 py-2 bg-red-700 rounded-md text-white fixed top-2 right-2' onClick={() => contextValues.setFile(null)}>X</button>
@@ -56,7 +64,7 @@ export default function FileUpload() {
                         <Page pageNumber={contextValues.currPage} className="px-4 py-2 shadow-lg border" />
 
                     </Document>
-                    <div className='fixed bottom-2 flex items-center justify-center w-full gap-3'>
+                    <div className='fixed bottom-2 flex items-center justify-center w-full gap-3 z-50'>
                         {contextValues.currPage > 1 && <button onClick={() => changePage(-1)} className='px-4 py-2 bg-gray-700 rounded-md text-white'>{'<'}</button>}
                         <div className='px-4 py-2 bg-gray-700 rounded-md text-white'>Page {contextValues.currPage} of {contextValues.numPages}</div>
                         {contextValues.currPage < contextValues.numPages && <button onClick={() => changePage(1)} className='px-4 py-2 bg-gray-700 rounded-md text-white'>{'>'}</button>}
