@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
+import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
+import 'react-pdf/dist/esm/Page/TextLayer.css';
 import { useDropzone } from 'react-dropzone'
 
 export default function FileUpload() {
@@ -62,7 +64,7 @@ export default function FileUpload() {
                                 >
                                     <span>Upload a file</span>
                                 </label>
-                                <input type="file" className="sr-only" accept=".pdf"
+                                <input type="file" className="sr-only" accept="application/pdf"
                                     {...getInputProps()}
                                 />
                                 <p className="pl-1">or drag and drop</p>
