@@ -4,24 +4,43 @@ import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
-import { useDropzone } from 'react-dropzone'
+import { useDropzone } from 'react-dropzone';
+import { fabric } from 'fabric';
+import { useButtons } from '../context/CanvasContext';
 
 export default function FileUpload() {
 
     const [numPages, setNumPages] = useState(null);
     const [currPage, setCurrPage] = useState(1);
     const [selectedFile, setFile] = useState(null);
+
     const { getRootProps, getInputProps } = useDropzone({
         onDrop: files => setFile(files[0])
     })
+
     function onDocumentLoadSuccess({ numPages }) {
         setNumPages(numPages);
         setCurrPage(1);
+        contextValues.setCanvas(initCanvas());
     }
 
     function changePage(offset) {
         setCurrPage(page => page + offset);
     }
+
+    // fabric js
+
+    const contextValues = useButtons();
+
+    const initCanvas = () => (
+        new fabric.Canvas('canvas', {
+            height: 792,
+            width: 612,
+            backgroundColor: 'rgba(0,0,0,0)'
+        })
+    )
+
+    // fabric js
 
     React.useEffect(() => {
         pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
@@ -33,6 +52,9 @@ export default function FileUpload() {
                 <div className="w-full py-8">
                     <button className='px-4 py-2 bg-red-700 rounded-md text-white fixed top-2 right-2' onClick={() => setFile(null)}>X</button>
                     <Document file={selectedFile} onLoadSuccess={onDocumentLoadSuccess} className="flex justify-center">
+                        <div className='absolute z-[9]'>
+                            <canvas id="canvas" />
+                        </div>
                         <Page pageNumber={currPage} className="px-4 py-2 shadow-lg border" />
                     </Document>
                     <div className='fixed bottom-2 flex items-center justify-center w-full gap-3'>
