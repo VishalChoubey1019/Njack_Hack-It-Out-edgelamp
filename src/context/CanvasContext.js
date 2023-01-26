@@ -14,13 +14,41 @@ export const CanvasProvider = ({ children }) => {
     const [selectedFile, setFile] = React.useState(null);
 
     const [canvas, setCanvas] = React.useState('');
-     
+
+    // uploaded image
+    const addImage = (e, canvi) => {
+        var file = e.target.files[0];
+        var reader = new FileReader();
+        reader.onload = function (f) {
+            var data = f.target.result;
+            fabric.Image.fromURL(data, function (img) {
+                img.scaleToWidth(300);
+                canvi.add(img).renderAll();
+                var dataURL = canvi.toDataURL({ format: 'png', quality: 0.8 });
+            });
+        }
+        reader.readAsDataURL(file);
+    }
+
     // add a rectangle
     const addRect = canvi => {
         const rect = new fabric.Rect({
             height: 180,
             width: 200,
             fill: '#f4a261',
+            cornerStyle: 'circle',
+            editable: true
+        });
+        canvi.add(rect);
+        canvi.renderAll();
+    }
+
+    // add highlight
+    const addHighlight = canvi => {
+        const rect = new fabric.Rect({
+            height: 20,
+            width: 400,
+            fill: 'rgba(253,255,150,0.4)',
             cornerStyle: 'circle',
             editable: true
         });
@@ -36,16 +64,10 @@ export const CanvasProvider = ({ children }) => {
         canvi.add(text);
         canvi.renderAll();
     }
-    // add image
-    const addImage = canvi => {
-        const image = new fabric.Image("jvghj")
-        canvi.add(image);
-        canvi.renderAll();
-    }
     // add functions here
 
     return (
-        <funButtons.Provider value={{ canvas, setCanvas, addRect, addText, addImage, numPages, setNumPages, currPage, setCurrPage, selectedFile, setFile }}>
+        <funButtons.Provider value={{ canvas, setCanvas, addRect, addText, addImage, numPages, setNumPages, currPage, setCurrPage, selectedFile, setFile, addHighlight, setUploadImg }}>
             {children}
         </funButtons.Provider>
     )
