@@ -2,7 +2,7 @@ import React from 'react'
 import { GrChapterAdd } from 'react-icons/gr'
 import { CgFormatText } from 'react-icons/cg'
 import { BiImageAdd } from 'react-icons/bi'
-import { AiOutlineHighlight } from 'react-icons/ai'
+import { AiOutlineClear, AiOutlineDelete, AiOutlineHighlight } from 'react-icons/ai'
 import { HiPencil } from 'react-icons/hi'
 import Tooltip from '@mui/material/Tooltip';
 import { useButtons } from '../context/CanvasContext';
@@ -32,6 +32,8 @@ export default function SideBar() {
                 {/* <Tooltip title="Add" placement="top"> */}
                 <AiOutlineHighlight className='text-[1.8rem] cursor-pointer' onClick={() => contextValues.addHighlight(contextValues.canvas)} />
                 {/* </Tooltip> */}
+                {/* <Tooltip title="Add" placement="top"> */}
+                <AiOutlineClear className='text-[1.8rem] cursor-pointer' onClick={() => contextValues.canvas.clear()} />
             </div>
         </div>
     )
