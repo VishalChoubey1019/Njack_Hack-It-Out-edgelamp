@@ -2,6 +2,7 @@ import React from 'react'
 import { GrChapterAdd } from 'react-icons/gr'
 import { CgFormatText } from 'react-icons/cg'
 import { BiImageAdd } from 'react-icons/bi'
+import { BsCircle } from 'react-icons/bs'
 import { AiOutlineClear, AiOutlineDelete, AiOutlineHighlight } from 'react-icons/ai'
 import { HiPencil } from 'react-icons/hi'
 import Tooltip from '@mui/material/Tooltip';
@@ -16,6 +17,9 @@ export default function SideBar() {
             <div className="mx-10 w-16 max-h-[80vh] border flex flex-col items-center justify-center shadow-lg rounded-lg py-8 px-4 text-[1.5rem] gap-8 bg-white">
                 {/* <Tooltip title="Add" placement="top"> */}
                 <GrChapterAdd className='cursor-pointer' onClick={() => contextValues.addRect(contextValues.canvas)} />
+                {/* </Tooltip> */}
+                {/* <Tooltip title="Add" placement="top"> */}
+                <BsCircle className='cursor-pointer' onClick={() => contextValues.addCircle(contextValues.canvas)} />
                 {/* </Tooltip> */}
                 {/* <Tooltip title="Add" placement="top"> */}
                 <CgFormatText className='text-[1.8rem] cursor-pointer' onClick={() => contextValues.addText(contextValues.canvas)} />

@@ -43,6 +43,17 @@ export const CanvasProvider = ({ children }) => {
         canvi.renderAll();
     }
 
+    const addCircle = canvi => {
+        const rect = new fabric.Circle({
+            radius: 100,
+            fill: '#f4a261',
+            cornerStyle: 'circle',
+            editable: true
+        });
+        canvi.add(rect);
+        canvi.renderAll();
+    }
+
     // add highlight
     const addHighlight = canvi => {
         const rect = new fabric.Rect({
@@ -71,7 +82,7 @@ export const CanvasProvider = ({ children }) => {
     // add functions here
 
     return (
-        <funButtons.Provider value={{ canvas, setCanvas, addRect, addText, addImage, numPages, setNumPages, currPage, setCurrPage, selectedFile, setFile, addHighlight, toggleDraw }}>
+        <funButtons.Provider value={{ canvas, setCanvas, addRect, addCircle, addText, addImage, numPages, setNumPages, currPage, setCurrPage, selectedFile, setFile, addHighlight, toggleDraw }}>
             {children}
         </funButtons.Provider>
     )
