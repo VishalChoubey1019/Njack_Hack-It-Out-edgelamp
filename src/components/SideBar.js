@@ -5,20 +5,25 @@ import { BiImageAdd } from 'react-icons/bi'
 import { BsCircle, BsSquare } from 'react-icons/bs'
 import { AiOutlineClear, AiOutlineDelete, AiOutlineHighlight } from 'react-icons/ai'
 import { HiPencil } from 'react-icons/hi'
-import Tooltip from '@mui/material/Tooltip';
+import { FiSave } from 'react-icons/fi'
 import { useButtons } from '../context/CanvasContext';
 import { Popover } from '@mui/material'
 import { SketchPicker } from 'react-color'
-
+import ExportPopup from './ExportPopup'
 export default function SideBar() {
 
     const contextValues = useButtons();
     const [openColor, setOpenColor] = React.useState(false);
+    const [openExporter, setOpenExporter] = React.useState(false);
 
     return (
         <div className="fixed z-50 top-[85%] md:top-0 left-0 md:h-[100vh] md:w-[10vw] h-[15vh] w-[100vw] flex md:flex-col flex-row items-center justify-center">
             <div className="md:mx-10 md:w-16 w-auto border flex md:flex-col flex-row items-center justify-center shadow-lg rounded-lg md:py-8 py-2 px-4 md:text-[1.5rem] text-[1.2rem] gap-8 bg-white">
-
+                <ExportPopup open={openExporter} setOpen={setOpenExporter} />
+                <FiSave className='md:text-[1.8rem] text-[1.5rem] cursor-pointer' onClick={() => {
+                    contextValues.edits[contextValues.currPage] = contextValues.canvas.toObject();
+                    setOpenExporter(true);
+                }} />
                 {/* <Tooltip title="Add" placement="top"> */}
                 <GrChapterAdd className='cursor-pointer text-[1.6rem]' onClick={() => contextValues.addNote(contextValues.canvas)} />
                 {/* </Tooltip> */}
