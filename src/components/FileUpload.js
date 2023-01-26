@@ -8,6 +8,8 @@ import { useDropzone } from 'react-dropzone';
 import { fabric } from 'fabric';
 import { useButtons } from '../context/CanvasContext';
 import SideBar from './SideBar';
+
+
 export default function FileUpload() {
     const [edits, setEdits] = useState({});
     const contextValues = useButtons();
@@ -56,13 +58,13 @@ export default function FileUpload() {
                 <div className="w-full py-8">
                     <button className='px-4 py-2 bg-red-700 rounded-md text-white fixed top-2 right-2' onClick={() => contextValues.setFile(null)}>X</button>
 
-                    <Document file={contextValues.selectedFile} onLoadSuccess={onDocumentLoadSuccess} className="flex justify-center">
+                    <Document file={contextValues.selectedFile} onLoadSuccess={onDocumentLoadSuccess} className="flex justify-center" id="doc">
 
                         <div className='absolute z-[9]'>
                             <canvas id="canvas" />
                         </div>
 
-                        <Page pageNumber={contextValues.currPage} className="px-4 py-2 shadow-lg border" />
+                        <Page pageNumber={contextValues.currPage} id="docPage" className="px-4 py-2 shadow-lg border" width={595} height={842} />
 
                     </Document>
                     <div className='fixed bottom-2 flex items-center justify-center w-full gap-3 z-50'>
