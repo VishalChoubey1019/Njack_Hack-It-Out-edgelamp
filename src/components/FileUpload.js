@@ -9,7 +9,7 @@ import { fabric } from 'fabric';
 import { useButtons } from '../context/CanvasContext';
 import SideBar from './SideBar';
 export default function FileUpload() {
-    const [edits,setEdits] = useState({});
+    const [edits, setEdits] = useState({});
     const contextValues = useButtons();
 
     const { getRootProps, getInputProps } = useDropzone({
@@ -29,13 +29,14 @@ export default function FileUpload() {
         setEdits(edits);
         contextValues.setCurrPage(page => page + offset);
         contextValues.canvas.clear()
-        edits[page+offset] && contextValues.canvas.loadFromJSON(edits[page+offset]);
+        edits[page + offset] && contextValues.canvas.loadFromJSON(edits[page + offset]);
         contextValues.canvas.renderAll();
     }
 
     // fabric js
     const initCanvas = () => (
         new fabric.Canvas('canvas', {
+            isDrawingMode: false,
             height: 792,
             width: 612,
             backgroundColor: 'rgba(0,0,0,0)'

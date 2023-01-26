@@ -64,10 +64,14 @@ export const CanvasProvider = ({ children }) => {
         canvi.add(text);
         canvi.renderAll();
     }
+
+    const toggleDraw = canvi => {
+        canvi.isDrawingMode = true;
+    }
     // add functions here
 
     return (
-        <funButtons.Provider value={{ canvas, setCanvas, addRect, addText, addImage, numPages, setNumPages, currPage, setCurrPage, selectedFile, setFile, addHighlight }}>
+        <funButtons.Provider value={{ canvas, setCanvas, addRect, addText, addImage, numPages, setNumPages, currPage, setCurrPage, selectedFile, setFile, addHighlight, toggleDraw }}>
             {children}
         </funButtons.Provider>
     )
