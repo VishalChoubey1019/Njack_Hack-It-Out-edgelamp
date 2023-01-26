@@ -8,6 +8,7 @@ import { useDropzone } from 'react-dropzone';
 import { fabric } from 'fabric';
 import { useButtons } from '../context/CanvasContext';
 import SideBar from './SideBar';
+import { MdClose } from 'react-icons/md';
 
 
 export default function FileUpload() {
@@ -56,7 +57,7 @@ export default function FileUpload() {
             {contextValues.selectedFile && <SideBar />}
             {contextValues.selectedFile ?
                 <div className="w-full py-8">
-                    <button className='px-4 py-2 bg-red-700 rounded-md text-white fixed top-2 right-2' onClick={() => contextValues.setFile(null)}>X</button>
+                    <div className='p-2 bg-red-500 shadow-sm rounded-md text-white fixed top-5 right-5' onClick={() => contextValues.setFile(null)}><MdClose className='text-white text-xl' /></div>
 
                     <Document file={contextValues.selectedFile} onLoadSuccess={onDocumentLoadSuccess} className="flex justify-center" id="doc">
 
