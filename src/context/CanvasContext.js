@@ -94,8 +94,9 @@ export const CanvasProvider = ({ children }) => {
     // add text
     const addText = canvi => {
         const text = new fabric.Textbox("Type Here ...", {
-            editable: true
+            editable: true,
         });
+        text.set({ fill: color })
         canvi.add(text);
         canvi.renderAll();
     }
