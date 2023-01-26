@@ -39,8 +39,8 @@ export default function FileUpload() {
     const initCanvas = () => (
         new fabric.Canvas('canvas', {
             isDrawingMode: false,
-            height: 792,
-            width: 612,
+            height: 842,
+            width: 595,
             backgroundColor: 'rgba(0,0,0,0)'
         })
     )
