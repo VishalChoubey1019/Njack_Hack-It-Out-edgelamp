@@ -20,6 +20,9 @@ export const CanvasProvider = ({ children }) => {
 
 
 
+
+    // canvas edits
+    const [edits, setEdits] = React.useState({});
     // uploaded image
     const addImage = (e, canvi) => {
 
@@ -104,7 +107,7 @@ export const CanvasProvider = ({ children }) => {
     // add functions here
 
     return (
-        <funButtons.Provider value={{ canvas, setCanvas, addRect, addCircle, addText, addImage, numPages, setNumPages, currPage, setCurrPage, selectedFile, setFile, addHighlight, toggleDraw, color, setColor, addNote, deleteBtn }}>
+        <funButtons.Provider value={{ canvas, setCanvas, addRect, addCircle, addText, addImage, numPages, setNumPages, currPage, setCurrPage, selectedFile, setFile, addHighlight, toggleDraw, color, setColor, edits, setEdits, addNote, deleteBtn }}>
             {children}
         </funButtons.Provider>
     )

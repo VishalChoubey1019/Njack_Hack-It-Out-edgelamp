@@ -12,7 +12,6 @@ import { MdClose } from 'react-icons/md';
 
 
 export default function FileUpload() {
-    const [edits, setEdits] = useState({});
     const contextValues = useButtons();
 
     const { getRootProps, getInputProps } = useDropzone({
@@ -20,7 +19,7 @@ export default function FileUpload() {
     })
 
     function onDocumentLoadSuccess({ numPages }) {
-        setEdits({});
+        contextValues.setEdits({});
         contextValues.setNumPages(numPages);
         contextValues.setCurrPage(1);
         contextValues.setCanvas(initCanvas());
@@ -28,11 +27,11 @@ export default function FileUpload() {
 
     function changePage(offset) {
         const page = contextValues.currPage;
-        edits[page] = contextValues.canvas.toObject();
-        setEdits(edits);
+        contextValues.edits[page] = contextValues.canvas.toObject();
+        contextValues.setEdits(contextValues.edits);
         contextValues.setCurrPage(page => page + offset);
         contextValues.canvas.clear()
-        edits[page + offset] && contextValues.canvas.loadFromJSON(edits[page + offset]);
+        contextValues.edits[page + offset] && contextValues.canvas.loadFromJSON(contextValues.edits[page + offset]);
         contextValues.canvas.renderAll();
     }
 
