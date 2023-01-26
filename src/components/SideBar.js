@@ -20,8 +20,8 @@ export default function SideBar() {
     }
 
     return (
-        <div className="fixed z-50 top-0 left-0 h-[100vh] flex flex-col items-center justify-center">
-            <div className="mx-10 w-16 max-h-[80vh] border flex flex-col items-center justify-center shadow-lg rounded-lg py-8 px-4 text-[1.5rem] gap-8 bg-white">
+        <div className="fixed z-50 top-[85%] md:top-0 left-0 md:h-[100vh] md:w-[10vw] h-[15vh] w-[100vw] flex md:flex-col flex-row items-center justify-center">
+            <div className="md:mx-10 md:w-16 w-auto md:max-h-[80vh] border flex md:flex-col flex-row items-center justify-center shadow-lg rounded-lg py-2 px-4 md:text-[1.5rem] text-[1.2rem] gap-8 bg-white">
                 {/* <Tooltip title="Add" placement="top"> */}
                 <GrChapterAdd className='cursor-pointer' onClick={() => contextValues.addRect(contextValues.canvas)} />
                 {/* </Tooltip> */}
@@ -29,24 +29,24 @@ export default function SideBar() {
                 <BsCircle className='cursor-pointer' onClick={() => contextValues.addCircle(contextValues.canvas)} />
                 {/* </Tooltip> */}
                 {/* <Tooltip title="Add" placement="top"> */}
-                <CgFormatText className='text-[1.8rem] cursor-pointer' onClick={() => contextValues.addText(contextValues.canvas)} />
+                <CgFormatText className='md:text-[1.8rem] text-[1.5rem] cursor-pointer' onClick={() => contextValues.addText(contextValues.canvas)} />
                 {/* </Tooltip> */}
                 {/* <Tooltip title="Add" placement="top"> */}
                 <label htmlFor="img-input">
-                    <BiImageAdd className='text-[1.8rem] cursor-pointer' />
+                    <BiImageAdd className='md:text-[1.8rem] text-[1.5rem] cursor-pointer' />
                 </label>
                 <input type="file" id="img-input" accept='image/*' style={{ display: "none" }} onChange={(e) => contextValues.addImage(e, contextValues.canvas)} />
                 {/* </Tooltip> */}
                 {/* <Tooltip title="Add" placement="top"> */}
-                <HiPencil className='text-[1.8rem] cursor-pointer' onClick={() => contextValues.addHighlight(contextValues.toggleDraw(contextValues.canvas))} />
+                <HiPencil className='md:text-[1.8rem] text-[1.5rem] cursor-pointer' onClick={() => contextValues.addHighlight(contextValues.toggleDraw(contextValues.canvas))} />
                 {/* </Tooltip> */}
                 {/* <Tooltip title="Add" placement="top"> */}
-                <AiOutlineHighlight className='text-[1.8rem] cursor-pointer' onClick={() => contextValues.addHighlight(contextValues.canvas)} />
+                <AiOutlineHighlight className='md:text-[1.8rem] text-[1.5rem] cursor-pointer' onClick={() => contextValues.addHighlight(contextValues.canvas)} />
                 {/* </Tooltip> */}
                 {/* <Tooltip title="Add" placement="top"> */}
-                <AiOutlineClear className='text-[1.8rem] cursor-pointer' onClick={() => contextValues.canvas.clear()} />
+                <AiOutlineClear className='md:text-[1.8rem] text-[1.5rem] cursor-pointer' onClick={() => contextValues.canvas.clear()} />
 
-                <div className="w-[1.8rem] h-[1.8rem] rounded-[50%]" style={{ background: contextValues.color }} onClick={(e) => setOpenColor(e.currentTarget)}></div>
+                <div className="md:w-[1.8rem] md:h-[1.8rem] w-[1.3rem] h-[1.3rem] rounded-[50%]" style={{ background: contextValues.color }} onClick={(e) => setOpenColor(e.currentTarget)}></div>
                 <Popover
                     id="simple-popover"
                     open={Boolean(openColor)}
