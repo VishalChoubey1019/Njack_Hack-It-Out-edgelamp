@@ -15,9 +15,6 @@ export const CanvasProvider = ({ children }) => {
 
     const [color, setColor] = React.useState("#f4a261");
     const [canvas, setCanvas] = React.useState('');
-
-    console.log(color)
-
     // uploaded image
     const addImage = (e, canvi) => {
         var file = e.target.files[0];
