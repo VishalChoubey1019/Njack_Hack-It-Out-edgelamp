@@ -23,7 +23,7 @@ export default function SideBar() {
                 <label htmlFor="img-input">
                     <BiImageAdd className='text-[1.8rem] cursor-pointer' />
                 </label>
-                <input type="file" id="img-input" accept='image/*' style={{ display: "none" }} onChange={(e) => contextValues.uploadImg(e, contextValues.canvas)} />
+                <input type="file" id="img-input" accept='image/*' style={{ display: "none" }} onChange={(e) => contextValues.addImage(e, contextValues.canvas)} />
                 {/* </Tooltip> */}
                 {/* <Tooltip title="Add" placement="top"> */}
                 <AiOutlineHighlight className='text-[1.8rem] cursor-pointer' onClick={() => contextValues.addHighlight(contextValues.canvas)} />

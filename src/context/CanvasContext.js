@@ -67,7 +67,7 @@ export const CanvasProvider = ({ children }) => {
     // add functions here
 
     return (
-        <funButtons.Provider value={{ canvas, setCanvas, addRect, addText, addImage, numPages, setNumPages, currPage, setCurrPage, selectedFile, setFile, addHighlight, setUploadImg }}>
+        <funButtons.Provider value={{ canvas, setCanvas, addRect, addText, addImage, numPages, setNumPages, currPage, setCurrPage, selectedFile, setFile, addHighlight }}>
             {children}
         </funButtons.Provider>
     )
