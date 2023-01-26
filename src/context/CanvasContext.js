@@ -13,7 +13,10 @@ export const CanvasProvider = ({ children }) => {
     const [currPage, setCurrPage] = React.useState(1);
     const [selectedFile, setFile] = React.useState(null);
 
+    const [color, setColor] = React.useState("#f4a261");
     const [canvas, setCanvas] = React.useState('');
+
+    console.log(color)
 
     // uploaded image
     const addImage = (e, canvi) => {
@@ -35,7 +38,7 @@ export const CanvasProvider = ({ children }) => {
         const rect = new fabric.Rect({
             height: 180,
             width: 200,
-            fill: '#f4a261',
+            fill: color,
             cornerStyle: 'circle',
             editable: true
         });
@@ -46,7 +49,7 @@ export const CanvasProvider = ({ children }) => {
     const addCircle = canvi => {
         const rect = new fabric.Circle({
             radius: 100,
-            fill: '#f4a261',
+            fill: color,
             cornerStyle: 'circle',
             editable: true
         });
@@ -59,7 +62,7 @@ export const CanvasProvider = ({ children }) => {
         const rect = new fabric.Rect({
             height: 20,
             width: 400,
-            fill: 'rgba(253,255,150,0.4)',
+            fill: color + '33',
             cornerStyle: 'circle',
             editable: true
         });
@@ -82,7 +85,7 @@ export const CanvasProvider = ({ children }) => {
     // add functions here
 
     return (
-        <funButtons.Provider value={{ canvas, setCanvas, addRect, addCircle, addText, addImage, numPages, setNumPages, currPage, setCurrPage, selectedFile, setFile, addHighlight, toggleDraw }}>
+        <funButtons.Provider value={{ canvas, setCanvas, addRect, addCircle, addText, addImage, numPages, setNumPages, currPage, setCurrPage, selectedFile, setFile, addHighlight, toggleDraw, color, setColor }}>
             {children}
         </funButtons.Provider>
     )

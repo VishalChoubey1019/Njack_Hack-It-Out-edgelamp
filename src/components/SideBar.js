@@ -7,10 +7,17 @@ import { AiOutlineClear, AiOutlineDelete, AiOutlineHighlight } from 'react-icons
 import { HiPencil } from 'react-icons/hi'
 import Tooltip from '@mui/material/Tooltip';
 import { useButtons } from '../context/CanvasContext';
+import { Popover } from '@mui/material'
+import { SketchPicker } from 'react-color'
 
 export default function SideBar() {
 
     const contextValues = useButtons();
+    const [openColor, setOpenColor] = React.useState(false);
+
+    const colorSelector = () => {
+
+    }
 
     return (
         <div className="fixed z-50 top-0 left-0 h-[100vh] flex flex-col items-center justify-center">
@@ -38,7 +45,24 @@ export default function SideBar() {
                 {/* </Tooltip> */}
                 {/* <Tooltip title="Add" placement="top"> */}
                 <AiOutlineClear className='text-[1.8rem] cursor-pointer' onClick={() => contextValues.canvas.clear()} />
+
+                <div className="w-[1.8rem] h-[1.8rem] rounded-[50%]" style={{ background: contextValues.color }} onClick={(e) => setOpenColor(e.currentTarget)}></div>
+                <Popover
+                    id="simple-popover"
+                    open={Boolean(openColor)}
+                    anchorEl={openColor}
+                    onClose={() => setOpenColor(null)}
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'left',
+                    }}
+                >
+                    <SketchPicker
+                        color={contextValues.color}
+                        onChangeComplete={col => contextValues.setColor(col.hex)}
+                    />
+                </Popover>
             </div>
-        </div>
+        </div >
     )
 }
