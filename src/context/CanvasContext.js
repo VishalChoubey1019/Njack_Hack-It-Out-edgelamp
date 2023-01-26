@@ -7,6 +7,8 @@ export const useButtons = () => {
     return React.useContext(funButtons)
 }
 
+
+
 export const CanvasProvider = ({ children }) => {
     // file
     const [numPages, setNumPages] = React.useState(null);
@@ -16,10 +18,14 @@ export const CanvasProvider = ({ children }) => {
     const [color, setColor] = React.useState("#f4a261");
     const [canvas, setCanvas] = React.useState('');
 
+
+
+
     // canvas edits
     const [edits, setEdits] = React.useState({});
     // uploaded image
     const addImage = (e, canvi) => {
+
         var file = e.target.files[0];
         var reader = new FileReader();
         reader.onload = function (f) {
@@ -31,6 +37,21 @@ export const CanvasProvider = ({ children }) => {
             });
         }
         reader.readAsDataURL(file);
+    }
+
+    const addNote = (canvi) => {
+        fabric.Image.fromURL(`./note/note${(Math.floor(Math.random() * 10) % 4) + 1}.png`, function (img) {
+            img.scaleToWidth(100);
+            canvi.add(img).renderAll();
+            var dataURL = canvi.toDataURL({ format: 'png', quality: 0.8 });
+        });
+    }
+
+    const deleteBtn = () => {
+        var activeObject = canvas.getActiveObject();
+        if (activeObject) {
+            canvas.remove(activeObject);
+        }
     }
 
     // add a rectangle
@@ -80,12 +101,12 @@ export const CanvasProvider = ({ children }) => {
     }
 
     const toggleDraw = canvi => {
-        canvi.isDrawingMode = true;
+        canvi.isDrawingMode = !canvi.isDrawingMode;
     }
     // add functions here
 
     return (
-        <funButtons.Provider value={{ canvas, setCanvas, addRect, addCircle, addText, addImage, numPages, setNumPages, currPage, setCurrPage, selectedFile, setFile, addHighlight, toggleDraw, color, setColor, edits, setEdits }}>
+        <funButtons.Provider value={{ canvas, setCanvas, addRect, addCircle, addText, addImage, numPages, setNumPages, currPage, setCurrPage, selectedFile, setFile, addHighlight, toggleDraw, color, setColor, edits, setEdits, addNote, deleteBtn }}>
             {children}
         </funButtons.Provider>
     )
