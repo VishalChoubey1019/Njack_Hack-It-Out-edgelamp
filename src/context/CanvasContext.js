@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { fabric } from 'fabric'
 
 const funButtons = React.createContext()
@@ -14,7 +14,7 @@ export const CanvasProvider = ({ children }) => {
     const [numPages, setNumPages] = React.useState(null);
     const [currPage, setCurrPage] = React.useState(1);
     const [selectedFile, setFile] = React.useState(null);
-
+    const exportPage = useRef(null);
     const [color, setColor] = React.useState("#f4a261");
     const [canvas, setCanvas] = React.useState('');
 
@@ -37,6 +37,7 @@ export const CanvasProvider = ({ children }) => {
             });
         }
         reader.readAsDataURL(file);
+        canvi.isDrawingMode = false
     }
 
     const addNote = (canvi) => {
@@ -45,6 +46,7 @@ export const CanvasProvider = ({ children }) => {
             canvi.add(img).renderAll();
             var dataURL = canvi.toDataURL({ format: 'png', quality: 0.8 });
         });
+        canvi.isDrawingMode = false
     }
 
     const deleteBtn = () => {
@@ -65,6 +67,7 @@ export const CanvasProvider = ({ children }) => {
         });
         canvi.add(rect);
         canvi.renderAll();
+        canvi.isDrawingMode = false
     }
 
     const addCircle = canvi => {
@@ -76,6 +79,7 @@ export const CanvasProvider = ({ children }) => {
         });
         canvi.add(rect);
         canvi.renderAll();
+        canvi.isDrawingMode = false
     }
 
     // add highlight
@@ -89,6 +93,7 @@ export const CanvasProvider = ({ children }) => {
         });
         canvi.add(rect);
         canvi.renderAll();
+        canvi.isDrawingMode = false
     }
 
     // add text
@@ -99,15 +104,18 @@ export const CanvasProvider = ({ children }) => {
         text.set({ fill: color })
         canvi.add(text);
         canvi.renderAll();
+        canvi.isDrawingMode = false
     }
 
     const toggleDraw = canvi => {
         canvi.isDrawingMode = !canvi.isDrawingMode;
     }
     // add functions here
-
+    const exportPdf = () =>{
+        console.log(exportPage.current)
+    }
     return (
-        <funButtons.Provider value={{ canvas, setCanvas, addRect, addCircle, addText, addImage, numPages, setNumPages, currPage, setCurrPage, selectedFile, setFile, addHighlight, toggleDraw, color, setColor, edits, setEdits, addNote, deleteBtn }}>
+        <funButtons.Provider value={{ canvas, setCanvas, addRect, addCircle, addText, addImage, numPages, setNumPages, currPage, setCurrPage, selectedFile, setFile, addHighlight, toggleDraw, color, setColor, edits, setEdits, addNote, deleteBtn, exportPage, exportPdf }}>
             {children}
         </funButtons.Provider>
     )

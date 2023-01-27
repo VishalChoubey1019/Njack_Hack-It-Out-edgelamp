@@ -1,8 +1,9 @@
 import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import ExportPDF from './ExportPDF'
+import { useButtons } from '../context/CanvasContext';
 export default function ExportPopup(props) {
-  
+  const contextValues = useButtons();
   return (
     <Transition.Root show={props.open} as={Fragment}>
       <Dialog as="div" className="relative z-50" onClose={props.setOpen}>
@@ -41,7 +42,7 @@ export default function ExportPopup(props) {
                   <button
                     type="button"
                     className="inline-flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:text-sm"
-                    onClick={() => props.setOpen(false)}
+                    onClick={() => contextValues.exportPdf()}
                   >
                     Export
                   </button>
