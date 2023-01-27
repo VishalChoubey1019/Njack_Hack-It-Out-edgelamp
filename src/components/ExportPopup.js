@@ -32,9 +32,6 @@ export default function ExportPopup(props) {
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all">
                 <div>
                   <div className="mt-3 text-center sm:mt-5">
-                    <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
-                      Export PDF
-                    </Dialog.Title>
                     <div className="mt-2">
                        <ExportPDF />
                     </div>

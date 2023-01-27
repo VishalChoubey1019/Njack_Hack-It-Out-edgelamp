@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ReactPDF, { Document, Page, pdfjs, View, Canvas } from 'react-pdf';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
@@ -8,6 +8,7 @@ import { fabric } from 'fabric';
 import { useButtons } from '../context/CanvasContext';
 
 export default function ExportPDF() {
+    const page = useRef(null);
     const contextValues = useButtons();
     const [exportCanvas, setExportCanvas] = useState(null);
     const [numPages, setNumPages] = React.useState(null);
@@ -46,23 +47,25 @@ export default function ExportPDF() {
 
     React.useEffect(() => {
         pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+        setTimeout(() => {
+            setInterval(() => {
+                changePage(1);
+                console.log(page.current)
+            },500)
+        },3000)
     }, [])
 
     return (
         <div>
             {contextValues.selectedFile ?
                 <div className="w-full py-8">
-                    <Document file={contextValues.selectedFile} onLoadSuccess={onDocumentLoadSuccess} className="flex justify-center" id="doc">
+                    <Document file={contextValues.selectedFile} onLoadSuccess={onDocumentLoadSuccess} className="flex justify-center" ref={page}>
 
-                        {/* <div className='absolute z-[9]'>
+                        <div className='absolute z-[9]'>
                             <canvas id="canvas-export" />
-                        </div> */}
+                        </div>
 
-                        <Page pageNumber={currPage} id="docPage" className="px-4 py-2 shadow-lg border" width={595} height={842}>
-                            <View>
-                              <Canvas id="canvas-export" />
-                            </View>
-                        </Page>    
+                        <Page pageNumber={currPage} id="docPage" className="px-4 py-2 shadow-lg border" width={595} height={842} /> 
 
                     </Document>
                     <div className='fixed top-1 flex items-center justify-center w-full gap-3 mt-3 opacity-70'>
