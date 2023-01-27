@@ -15,11 +15,9 @@ export const CanvasProvider = ({ children }) => {
     const [currPage, setCurrPage] = React.useState(1);
     const [selectedFile, setFile] = React.useState(null);
     const exportPage = useRef(null);
+    const [exportPages, setExportPages] = React.useState([]);
     const [color, setColor] = React.useState("#f4a261");
     const [canvas, setCanvas] = React.useState('');
-
-
-
 
     // canvas edits
     const [edits, setEdits] = React.useState({});
@@ -112,7 +110,8 @@ export const CanvasProvider = ({ children }) => {
     }
     // add functions here
     const exportPdf = () =>{
-        console.log(exportPage.current)
+        setExportPages((prev)=>([...prev,exportPage.current]));
+        console.log(exportPages)
     }
     return (
         <funButtons.Provider value={{ canvas, setCanvas, addRect, addCircle, addText, addImage, numPages, setNumPages, currPage, setCurrPage, selectedFile, setFile, addHighlight, toggleDraw, color, setColor, edits, setEdits, addNote, deleteBtn, exportPage, exportPdf }}>
