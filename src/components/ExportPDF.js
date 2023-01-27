@@ -28,8 +28,7 @@ export default function ExportPDF() {
         const page = currPage;
         setCurrPage(page => page + offset);
         exportCanvas.clear()
-        contextValues.edits[page + offset] && exportCanvas.loadFromJSON(contextValues.edits[page + offset]);
-        exportCanvas.renderAll();
+        contextValues.edits[page + offset] && exportCanvas.loadFromJSON(contextValues.edits[page + offset],exportCanvas.renderAll.bind(exportCanvas));
     }
 
     // fabric js
