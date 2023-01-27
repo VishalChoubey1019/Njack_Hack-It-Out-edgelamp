@@ -2,8 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
-import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
-import 'react-pdf/dist/esm/Page/TextLayer.css';
 import { fabric } from 'fabric';
 import { useButtons } from '../context/CanvasContext';
 
@@ -13,11 +11,11 @@ export default function ExportPDF() {
     const [numPages, setNumPages] = React.useState(null);
     const [currPage, setCurrPage] = React.useState(1);
 
-    useEffect(()=>{
-         if (exportCanvas){
+    useEffect(() => {
+        if (exportCanvas) {
             contextValues.edits[currPage] && exportCanvas.loadFromJSON(contextValues.edits[currPage]);
-         }
-    },[contextValues.edits, currPage, exportCanvas])
+        }
+    }, [contextValues.edits, currPage, exportCanvas])
     function onDocumentLoadSuccess({ numPages }) {
         setNumPages(numPages);
         setCurrPage(1);
@@ -28,7 +26,7 @@ export default function ExportPDF() {
         const page = currPage;
         setCurrPage(page => page + offset);
         exportCanvas.clear()
-        contextValues.edits[page + offset] && exportCanvas.loadFromJSON(contextValues.edits[page + offset],exportCanvas.renderAll.bind(exportCanvas));
+        contextValues.edits[page + offset] && exportCanvas.loadFromJSON(contextValues.edits[page + offset], exportCanvas.renderAll.bind(exportCanvas));
     }
 
     // fabric js
@@ -45,27 +43,21 @@ export default function ExportPDF() {
 
     React.useEffect(() => {
         pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
-        setTimeout(()=>{
-            setInterval(()=>{
-                changePage(1)
-            },3000)
-        },3000)
     }, [])
 
     return (
         <div>
             {contextValues.selectedFile ?
                 <div className="w-full py-8">
+                    <div ref={contextValues.exportPage} id="toExport">
+                        <Document file={contextValues.selectedFile} onLoadSuccess={onDocumentLoadSuccess} className="flex justify-center">
 
-                    <div ref={contextValues.exportPage}>
-                    <Document file={contextValues.selectedFile} onLoadSuccess={onDocumentLoadSuccess} className="flex justify-center">
+                            <div className='absolute z-[9]'>
+                                <canvas id="canvas-export" />
+                            </div>
 
-                        <div className='absolute z-[9]'>
-                            <canvas id="canvas-export" />
-                        </div>
-
-                        <Page pageNumber={currPage} id="docPage" className="px-4 py-2 shadow-lg border" width={595} height={842} /> 
-                    </Document>
+                            <Page pageNumber={currPage} id="docPage" className="px-4 py-2 shadow-lg border" width={595} height={842} />
+                        </Document>
                     </div>
                     <div className='fixed top-1 flex items-center justify-center w-full gap-3 mt-3 opacity-70'>
                         {currPage > 1 && <button onClick={() => changePage(-1)} className='px-2 py-1 text-sm bg-gray-700 rounded-md text-white'>{'<'}</button>}

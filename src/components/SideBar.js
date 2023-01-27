@@ -1,5 +1,5 @@
 import React from 'react'
-import { GrChapterAdd } from 'react-icons/gr'
+import { GrChapterAdd, GrDocumentDownload } from 'react-icons/gr'
 import { CgFormatText } from 'react-icons/cg'
 import { BiImageAdd } from 'react-icons/bi'
 import { BsCircle, BsSquare } from 'react-icons/bs'
@@ -19,7 +19,8 @@ export default function SideBar() {
     return (
         <div className="fixed z-50 top-[85%] md:top-0 left-0 md:h-[100vh] md:w-[10vw] h-[15vh] w-[100vw] flex md:flex-col flex-row items-center justify-center">
             <div className="md:mx-10 md:w-16 w-auto border flex md:flex-col flex-row items-center justify-center shadow-lg rounded-lg md:py-8 py-2 px-4 md:text-[1.5rem] text-[1.2rem] gap-8 bg-white">
-                <ExportPopup open={openExporter} setOpen={setOpenExporter} />
+                <ExportPopup className="text-[1.5rem] cursor-pointer" open={openExporter} setOpen={setOpenExporter} />
+                {/* <GrDocumentDownload className="md:text-[1.8rem] text-[1.5rem] cursor-pointer" /> */}
                 <FiSave className='md:text-[1.8rem] text-[1.5rem] cursor-pointer' onClick={() => {
                     contextValues.edits[contextValues.currPage] = contextValues.canvas.toObject();
                     setOpenExporter(true);

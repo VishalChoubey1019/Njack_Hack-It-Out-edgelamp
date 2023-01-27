@@ -14,11 +14,11 @@ export const CanvasProvider = ({ children }) => {
     const [numPages, setNumPages] = React.useState(null);
     const [currPage, setCurrPage] = React.useState(1);
     const [selectedFile, setFile] = React.useState(null);
-    const exportPage = useRef(null);
-    const [exportPages, setExportPages] = React.useState([]);
     const [color, setColor] = React.useState("#f4a261");
     const [canvas, setCanvas] = React.useState('');
 
+    const exportPage = useRef(null);
+    const [exportPages, setExportPages] = React.useState([]);
     // canvas edits
     const [edits, setEdits] = React.useState({});
     // uploaded image
@@ -109,8 +109,8 @@ export const CanvasProvider = ({ children }) => {
         canvi.isDrawingMode = !canvi.isDrawingMode;
     }
     // add functions here
-    const exportPdf = () =>{
-        setExportPages((prev)=>([...prev,exportPage.current]));
+    const exportPdf = () => {
+        setExportPages((prev) => ([...prev, exportPage.current]));
         console.log(exportPages)
     }
     return (

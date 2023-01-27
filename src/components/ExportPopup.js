@@ -1,9 +1,86 @@
 import { Fragment } from 'react'
+import React, { useEffect, useRef, useState } from 'react';
+import { Document, Page, pdfjs } from 'react-pdf';
+import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
+import 'react-pdf/dist/esm/Page/TextLayer.css';
+import { fabric } from 'fabric';
 import { Dialog, Transition } from '@headlessui/react'
 import ExportPDF from './ExportPDF'
 import { useButtons } from '../context/CanvasContext';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+
 export default function ExportPopup(props) {
+
   const contextValues = useButtons();
+  const [exportCanvas, setExportCanvas] = React.useState(null);
+  const [numPages, setNumPages] = React.useState(null);
+  const [currPage, setCurrPage] = React.useState(1);
+
+  useEffect(() => {
+    if (exportCanvas) {
+      contextValues.edits[currPage] && exportCanvas.loadFromJSON(contextValues.edits[currPage]);
+    }
+  }, [contextValues.edits, currPage, exportCanvas])
+
+  function onDocumentLoadSuccess({ numPages }) {
+    setNumPages(numPages);
+    setCurrPage(1);
+    setExportCanvas(initCanvas());
+  }
+
+  function changePage(offset) {
+    const page = currPage;
+    setCurrPage(page => page + offset);
+    exportCanvas.clear()
+    contextValues.edits[page + offset] && exportCanvas.loadFromJSON(contextValues.edits[page + offset], exportCanvas.renderAll.bind(exportCanvas));
+  }
+
+  // fabric js
+  const initCanvas = () => (
+    new fabric.StaticCanvas('canvas-export', {
+      isDrawingMode: false,
+      height: 842,
+      width: 595,
+      backgroundColor: 'rgba(0,0,0,0)'
+    })
+  )
+
+  // fabric js
+
+  React.useEffect(() => {
+    pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+  }, [])
+
+
+  const onExport = () => {
+
+    const docToExport = document.querySelector("#toExport");
+    const pdf = new jsPDF("p", "mm", "a4");
+    setTimeout(() => {
+      let i = 0;
+      let intervalId = setInterval(() => {
+        html2canvas(docToExport)
+          .then((canvas) => {
+            const imgData = canvas.toDataURL('image/png');
+            pdf.addImage(imgData, 'PNG', 0, 0);
+          });
+        i = i + 1
+        console.log(i, numPages)
+        i <= numPages ? changePage(1) : stopInterval();
+        pdf.addPage();
+        pdf.setPage(i);
+      }, 3000)
+
+      const stopInterval = () => {
+        clearInterval(intervalId);
+        pdf.save("Edge_lamp_editor.pdf");
+      }
+
+    }, 3000)
+
+  }
+
   return (
     <Transition.Root show={props.open} as={Fragment}>
       <Dialog as="div" className="relative z-50" onClose={props.setOpen}>
@@ -34,7 +111,28 @@ export default function ExportPopup(props) {
                 <div>
                   <div className="mt-3 text-center sm:mt-5">
                     <div className="mt-2">
-                       <ExportPDF />
+                      <div>
+                        {contextValues.selectedFile ?
+                          <div className="w-full py-8">
+                            <div ref={contextValues.exportPage} id="toExport">
+                              <Document file={contextValues.selectedFile} onLoadSuccess={onDocumentLoadSuccess} className="flex justify-center">
+
+                                <div className='absolute z-[9]'>
+                                  <canvas id="canvas-export" />
+                                </div>
+
+                                <Page pageNumber={currPage} id="docPage" className="px-4 py-2 shadow-lg border" width={595} height={842} />
+
+                              </Document>
+                            </div>
+                            <div className='fixed top-1 flex items-center justify-center w-full gap-3 mt-3 opacity-70'>
+                              {currPage > 1 && <button onClick={() => changePage(-1)} className='px-2 py-1 text-sm bg-gray-700 rounded-md text-white'>{'<'}</button>}
+                              <div className='px-2 py-1 text-sm bg-gray-700 rounded-md text-white'>Page {currPage} of {numPages}</div>
+                              {currPage < numPages && <button onClick={() => changePage(1)} className='px-2 py-1 text-sm bg-gray-700 rounded-md text-white'>{'>'}</button>}
+                            </div>
+                          </div>
+                          : null}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -42,7 +140,7 @@ export default function ExportPopup(props) {
                   <button
                     type="button"
                     className="inline-flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:text-sm"
-                    onClick={() => contextValues.exportPdf()}
+                    onClick={() => onExport()}
                   >
                     Export
                   </button>
