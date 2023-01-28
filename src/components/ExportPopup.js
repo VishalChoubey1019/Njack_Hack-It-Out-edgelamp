@@ -56,6 +56,7 @@ export default function ExportPopup(props) {
 
 
   const onExport = () => {
+    setCurrPage(1);
     setExporting(true)
     const docToExport = document.querySelector("#toExport");
     const pdf = new jsPDF("p", "mm", "a4");
