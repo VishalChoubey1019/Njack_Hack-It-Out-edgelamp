@@ -6,7 +6,7 @@ export default function Guide() {
         <div className="flex flex-col items-center w-full h-full gap-8">
             <h1 className=" my-4 heading text-5xl tracking-wider font-[Montserrat] text-center pt-5 text-[#2e2e2e]"><b>Useful Tools</b></h1>
             <ol className="orderedList text-indigo-600 text-white text-black my-2 rounded-2xl flex flex-col gap-8 mb-16">
-                <li className="points shadow-[1px_1px_5px_rgba(0,0,0,0.15)] z-50 pt-5 px-4 pb-5"> <b>Silent Features</b>
+                <li className="points shadow-[1px_1px_5px_rgba(0,0,0,0.15)] z-50 pt-5 px-4 pb-5"> <b>Salient Features</b>
                     <ul>
                         <li className="tool pt-7 py-3 border-b p-10 z-70 text-indigo-420"><b>Sticky Notes</b> <br /><p className="px-10 py-3 text-indigo-400">- Allows users to add a Sticky Notes on any page of the PDF document.</p></li>
                         <li className="tool py-5 border-b p-10 z-71 text-indigo-420"><b>Shape Tool</b>  <br /><p className="px-10 py-3 text-indigo-400">- Allows users to add a rectangle or a circle on any page of the PDF document.</p></li>
