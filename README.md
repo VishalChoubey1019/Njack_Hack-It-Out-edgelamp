@@ -1,3 +1,7 @@
+<h2>Website Link: https://njack-hack-it-out-edgelamp.vercel.app/</h2>
+
+<h3>How to use the application: https://njack-hack-it-out-edgelamp.vercel.app/guide/</h3>
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
