@@ -125,7 +125,7 @@ export default function ExportPopup(props) {
                       <div className="mt-2">
                         <div>
                           {contextValues.selectedFile ?
-                            <div className="w-full py-8">
+                            <div className="w-full py-4">
                               <div ref={contextValues.exportPage} id="toExport" style={{ opacity: currPage <= numPages ? '1' : '0' }}>
                                 <Document file={contextValues.selectedFile} onLoadSuccess={onDocumentLoadSuccess} className="flex justify-center">
 
@@ -133,7 +133,7 @@ export default function ExportPopup(props) {
                                     <canvas id="canvas-export" />
                                   </div>
 
-                                  <Page pageNumber={currPage} id="docPage" className="px-4 py-2 shadow-lg border" width={595} height={842} />
+                                  <Page pageNumber={currPage} id="docPage" className={`px-4 py-2 ${!isExporting && 'shadow-lg border'}`} width={595} height={842} />
 
                                 </Document>
                               </div>

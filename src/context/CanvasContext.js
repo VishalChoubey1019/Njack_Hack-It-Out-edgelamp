@@ -18,6 +18,7 @@ export const CanvasProvider = ({ children }) => {
     const [selectedFile, setFile] = React.useState(null);
     const [color, setColor] = React.useState("#f4a261");
     const [canvas, setCanvas] = React.useState('');
+    const [isExporting, setExporting] = React.useState(false);
 
     const exportPage = useRef(null);
     const [exportPages, setExportPages] = React.useState([]);
@@ -26,6 +27,7 @@ export const CanvasProvider = ({ children }) => {
     // uploaded image
 
     const downloadPage = () => {
+        setExporting(true);
         const doc = document.querySelector('#singlePageExport');
         html2canvas(doc)
             .then((canvas) => {
@@ -33,6 +35,7 @@ export const CanvasProvider = ({ children }) => {
                 const pdf = new jsPDF();
                 pdf.addImage(imgData, 'PNG', 0, 0);
                 pdf.save("edge_lamp_edited.pdf");
+                setExporting(false);
             });
     }
 
@@ -127,7 +130,7 @@ export const CanvasProvider = ({ children }) => {
         console.log(exportPages)
     }
     return (
-        <funButtons.Provider value={{ canvas, setCanvas, addRect, addCircle, addText, addImage, numPages, setNumPages, currPage, setCurrPage, selectedFile, setFile, addHighlight, toggleDraw, color, setColor, edits, setEdits, addNote, deleteBtn, exportPage, exportPdf, downloadPage }}>
+        <funButtons.Provider value={{ canvas, setCanvas, addRect, addCircle, addText, addImage, numPages, setNumPages, currPage, setCurrPage, selectedFile, setFile, addHighlight, toggleDraw, color, setColor, edits, setEdits, addNote, deleteBtn, exportPage, exportPdf, downloadPage, isExporting }}>
             {children}
         </funButtons.Provider>
     )

@@ -13,6 +13,7 @@ import { MdClose } from 'react-icons/md';
 
 export default function FileUpload() {
     const contextValues = useButtons();
+    const [isExporting, setExporting] = React.useState(false);
 
     const { getRootProps, getInputProps } = useDropzone({
         onDrop: files => contextValues.setFile(files[0])
@@ -65,7 +66,7 @@ export default function FileUpload() {
                                     <canvas id="canvas" />
                                 </div>
 
-                                <Page pageNumber={contextValues.currPage} id="docPage" className="px-4 py-2 shadow-lg border" width={595} height={842} />
+                                <Page pageNumber={contextValues.currPage} id="docPage" className={`px-4 py-2 ${!contextValues.isExporting && "shadow-lg border"}`} width={595} height={842} />
 
                             </Document>
                         </div>
