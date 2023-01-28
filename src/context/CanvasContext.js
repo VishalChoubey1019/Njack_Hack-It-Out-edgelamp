@@ -9,8 +9,6 @@ export const useButtons = () => {
     return React.useContext(funButtons)
 }
 
-
-
 export const CanvasProvider = ({ children }) => {
     // file
     const [numPages, setNumPages] = React.useState(null);
