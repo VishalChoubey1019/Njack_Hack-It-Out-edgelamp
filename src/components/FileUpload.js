@@ -36,14 +36,14 @@ export default function FileUpload() {
     }
 
     // fabric js
-    const initCanvas = () => (
-        new fabric.Canvas('canvas', {
+    const initCanvas = () => {
+        return (new fabric.Canvas('canvas', {
             isDrawingMode: false,
             height: 842,
             width: 595,
             backgroundColor: 'rgba(0,0,0,0)'
-        })
-    )
+        }))
+    }
 
     // fabric js
 
@@ -57,16 +57,19 @@ export default function FileUpload() {
             {contextValues.selectedFile ?
                 <div className="w-full py-8">
                     <div className='p-2 bg-red-500 shadow-sm rounded-md text-white fixed top-5 right-5' onClick={() => contextValues.setFile(null)}><MdClose className='text-white text-xl' /></div>
+                    <div className="flex justify-center items-center">
+                        <div id='singlePageExport'>
+                            <Document file={contextValues.selectedFile} onLoadSuccess={onDocumentLoadSuccess} className="flex justify-center" id="doc">
 
-                    <Document file={contextValues.selectedFile} onLoadSuccess={onDocumentLoadSuccess} className="flex justify-center" id="doc">
+                                <div className='absolute z-[9]'>
+                                    <canvas id="canvas" />
+                                </div>
 
-                        <div className='absolute z-[9]'>
-                            <canvas id="canvas" />
+                                <Page pageNumber={contextValues.currPage} id="docPage" className="px-4 py-2 shadow-lg border" width={595} height={842} />
+
+                            </Document>
                         </div>
-
-                        <Page pageNumber={contextValues.currPage} id="docPage" className="px-4 py-2 shadow-lg border" width={595} height={842} />
-
-                    </Document>
+                    </div>
                     <div className='fixed bottom-2 flex items-center justify-center w-full gap-3 z-50'>
                         {contextValues.currPage > 1 && <button onClick={() => changePage(-1)} className='px-4 py-2 bg-gray-700 rounded-md text-white'>{'<'}</button>}
                         <div className='px-4 py-2 bg-gray-700 rounded-md text-white'>Page {contextValues.currPage} of {contextValues.numPages}</div>

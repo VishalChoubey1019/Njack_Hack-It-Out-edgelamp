@@ -17,14 +17,11 @@ export default function SideBar() {
     const [openExporter, setOpenExporter] = React.useState(false);
 
     return (
-        <div className="fixed z-50 top-[85%] md:top-0 left-0 md:h-[100vh] md:w-[10vw] h-[15vh] w-[100vw] flex md:flex-col flex-row items-center justify-center">
-            <div className="md:mx-10 md:w-16 w-auto border flex md:flex-col flex-row items-center justify-center shadow-lg rounded-lg md:py-8 py-2 px-4 md:text-[1.5rem] text-[1.2rem] gap-8 bg-white">
+        <div className="fixed z-50 top-[85%] md:top-0 left-0 md:h-[100vh] md:w-max h-[15vh] w-[100vw] flex md:flex-col flex-row items-center justify-center md:mx-16">
+            <div className="md:mx-10 w-[100%] border max-h-[60vh] flex md:flex-col flex-wrap flex-row items-center justify-center shadow-lg rounded-lg md:py-8 py-2 px-4 md:text-[1.5rem] text-[1.2rem] gap-8 bg-white">
+
                 <ExportPopup className="text-[1.5rem] cursor-pointer" open={openExporter} setOpen={setOpenExporter} />
-                {/* <GrDocumentDownload className="md:text-[1.8rem] text-[1.5rem] cursor-pointer" /> */}
-                <FiSave className='md:text-[1.8rem] text-[1.5rem] cursor-pointer' onClick={() => {
-                    contextValues.edits[contextValues.currPage] = contextValues.canvas.toObject();
-                    setOpenExporter(true);
-                }} />
+
                 {/* <Tooltip title="Add" placement="top"> */}
                 <GrChapterAdd className='cursor-pointer text-[1.6rem]' onClick={() => contextValues.addNote(contextValues.canvas)} />
                 {/* </Tooltip> */}
@@ -60,6 +57,12 @@ export default function SideBar() {
 
                 {/* <Tooltip title="Add" placement="top"> */}
                 <AiOutlineClear className='md:text-[1.8rem] text-[1.5rem] cursor-pointer' onClick={() => contextValues.canvas.clear()} />
+
+                <GrDocumentDownload className="md:text-[1.8rem] text-[1.5rem] cursor-pointer" onClick={() => contextValues.downloadPage()} />
+                <FiSave className='md:text-[1.8rem] text-[1.5rem] cursor-pointer' onClick={() => {
+                    contextValues.edits[contextValues.currPage] = contextValues.canvas.toObject();
+                    setOpenExporter(true);
+                }} />
 
                 <div className="md:w-[1.8rem] md:h-[1.8rem] w-[1.3rem] h-[1.3rem] rounded-[50%]" style={{ background: contextValues.color }} onClick={(e) => setOpenColor(e.currentTarget)}></div>
                 <Popover
